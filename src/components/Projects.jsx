@@ -12,8 +12,8 @@ const projects = [
       "Enabled resume scoring and PDF generation",
     ],
     tech: "React, Node.js, Express, MongoDB, Gemini APIs",
-    link: "https://prepify-ai-zeta.vercel.app",
-    github: "https://github.com/22-vaibhav/Prepify-AI",
+    link: "https://prepify-ai-ebon.vercel.app/",
+    github: "https://github.com/21-sanket/Prepify-AI",
   },
   {
     title: "InsightForge — Multi-Agent AI Research System",
