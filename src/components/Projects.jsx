@@ -25,8 +25,8 @@ const projects = [
       "Developed Streamlit UI with downloadable reports",
     ],
     tech: "Python, LangChain, Mistral AI, Streamlit",
-    link: "https://multi-agent-research-system-69gtkgbo2bihaj4use9cwr.streamlit.app/",
-    github: "https://github.com/22-vaibhav/Multi-Agent-Research-System",
+    link: "https://insightforge-ai-bysanket.streamlit.app/",
+    github: "https://github.com/21-sanket/InsightForge-AI",
   },
   {
     title: "QuoteGenie — AI Quote Generation System",
