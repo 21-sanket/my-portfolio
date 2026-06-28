@@ -5,6 +5,7 @@ import profile from "../assets/cartoon-profile-sketch.png";
 export default function Hero() {
   return (
     <motion.section
+    
       id="home"
       className="hero"
       initial={{ opacity: 0, y: 40 }}
