@@ -59,7 +59,7 @@ export default function About() {
           <h3>Experience</h3>
 
           <p><strong>Full Stack Mern & AI/ML Engineer</strong></p>
-          <p>Eternal Ltd. (Formerly Zomato), Gurugram</p>
+          <p>Eternal Ltd. (Formerly Zomato), Gurugram, India</p>
 
           <ul>
             <li>
