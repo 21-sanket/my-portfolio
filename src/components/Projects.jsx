@@ -37,9 +37,9 @@ const projects = [
       "Designed deep learning model (Embedding + LSTM + Softmax)",
       "Deployed using Streamlit"
     ],
-    tech: "Python, TensorFlow, Keras, NLP, Streamlit",
-    link: "https://github.com/22-vaibhav/QuoteGenie",
-    github: "https://github.com/22-vaibhav/QuoteGenie",
+    tech: "Python, TensorFlow, Keras, NLP, LSTM Recurrent Neural Networks, Tokenizers, Numpy, Streamlit",
+    link: "https://quotegenie-ai-bysanket.streamlit.app/",
+    github: "https://github.com/21-sanket/QuoteGenie-AI",
   }
 ];
 
