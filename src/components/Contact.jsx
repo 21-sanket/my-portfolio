@@ -33,7 +33,6 @@ export default function Contact() {
         <p><strong>Location:</strong> Gurugram, India</p>
 
         <div className="contact-links">
-          {/* 💻 Make sure to replace YOURNUMBER below with your actual country code + phone number (e.g., 919876543210) */}
           <a
             href="https://wa.me/917979713506?text=Hi%20Sanket,%20I'd%20like%20to%20discuss%20a%20development%20project."
             target="_blank"
@@ -59,15 +58,23 @@ export default function Contact() {
             your requirements in my interactive project scoping form.
           </p>
 
-          <motion.button
-            type="button"
+          <motion.a
+            href="https://client-intake-form.tiiny.site"
+            target="_blank"
+            rel="noopener noreferrer"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => window.open("https://client-intake-form.tiiny.site", "_blank")}
-            style={{ cursor: "pointer", width: "100%" }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              textDecoration: "none",
+              cursor: "pointer",
+              width: "100%"
+            }}
           >
             Launch Project Intake Form &nbsp;→
-          </motion.button>
+          </motion.a>
 
         </div>
 
