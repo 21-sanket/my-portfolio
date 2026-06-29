@@ -8,7 +8,7 @@ export default function Contact() {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
       >
-        Contact Me
+        Let's Build Your Product
       </motion.h2>
 
       <motion.p
@@ -29,12 +29,25 @@ export default function Contact() {
       >
 
         {/* CONTACT INFO */}
-        <p><strong>Email:</strong> sanketraj.dev@gmail.com</p>
-        <p><strong>Location:</strong> Bangalore, India</p>
+        <p><strong>Email:</strong> sanketraj526@gmail.com</p>
+        <p><strong>Location:</strong> Gurugram, India</p>
 
         <div className="contact-links">
-          <a href="https://www.linkedin.com/in/sanket-raj" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a href="https://github.com/sanket-raj" target="_blank" rel="noopener noreferrer">GitHub</a>
+          {/* 💻 Make sure to replace YOURNUMBER below with your actual country code + phone number (e.g., 919876543210) */}
+          <a
+            href="https://wa.me/917979713506?text=Hi%20Sanket,%20I'd%20like%20to%20discuss%20a%20development%20project."
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            WhatsApp
+          </a>
+          <a
+            href="https://github.com/21-sanket"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
         </div>
 
         {/* INTAKE FUNNEL FORM GATEWAY */}
@@ -46,7 +59,7 @@ export default function Contact() {
             your requirements in my interactive project scoping form.
           </p>
 
-          <motion.button 
+          <motion.button
             type="button"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}

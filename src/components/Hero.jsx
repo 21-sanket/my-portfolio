@@ -45,7 +45,7 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
-          Freelance Full Stack Web Developer
+          Full Stack MERN & AI/ML Engineer
         </motion.h3>
 
         {/* DESCRIPTION */}
@@ -55,8 +55,7 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
         >
-          I build robust, high-performance web applications and scalable digital experiences.<br></br>
-          With 4+ years of experience, I've delivered 15+ projects and collaborated with engineering teams at Zomato.
+          I specialize in crafting robust, scalable, and high-performance digital systems. Over the past 4+ years, I've successfully delivered 15+ high-impact projects, partnering with agile engineering teams to build applications that are as efficient under the hood as they are seamless for the user.
         </motion.p>
 
         {/* CTA */}
