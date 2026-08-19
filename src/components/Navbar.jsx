@@ -28,7 +28,7 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
-  const navItems = ["Home", "About", "Skills", "Projects", "Contact"];
+  const navItems = ["Home", "About", "Skills", "Projects", "Testimonials", "Contact"];
 
   const handleNavClick = () => setMenuOpen(false);
 
