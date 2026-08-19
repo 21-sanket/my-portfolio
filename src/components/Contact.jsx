@@ -6,9 +6,6 @@ export default function Contact() {
   const [status, setStatus] = useState("IDLE"); // IDLE, SUBMITTING, SUCCESS, ERROR
   const [showQuickForm, setShowQuickForm] = useState(false);
 
-  // You can set your Formspree Form ID in .env as VITE_FORMSPREE_ID or paste your Formspree endpoint ID below:
-  const FORMSPREE_ID = import.meta.env.VITE_FORMSPREE_ID || "xvgopkzw";
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
@@ -16,7 +13,13 @@ export default function Contact() {
     setStatus("SUBMITTING");
 
     try {
-      const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+      // Use FormSubmit AJAX endpoint directed to sanketdev521@gmail.com (or Formspree if env variable set)
+      const formspreeId = import.meta.env.VITE_FORMSPREE_ID;
+      const endpoint = formspreeId
+        ? `https://formspree.io/f/${formspreeId}`
+        : "https://formsubmit.co/ajax/sanketdev521@gmail.com";
+
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -27,18 +30,22 @@ export default function Contact() {
           email: formData.email,
           message: formData.message,
           _replyto: formData.email,
-          _subject: `Portfolio Message from ${formData.name}`,
+          _subject: `⚡ New Portfolio Message from ${formData.name}`,
+          _captcha: "false",
         }),
       });
 
-      if (response.ok) {
+      const data = await response.json().catch(() => ({}));
+
+      if (response.ok || data.success === "true" || data.success === true) {
         setStatus("SUCCESS");
         setFormData({ name: "", email: "", message: "" });
       } else {
+        console.error("Submission failed:", data);
         setStatus("ERROR");
       }
     } catch (err) {
-      console.error("Formspree submission error:", err);
+      console.error("Form submission error:", err);
       setStatus("ERROR");
     }
   };
@@ -199,7 +206,7 @@ export default function Contact() {
 
                   {status === "ERROR" && (
                     <div style={{ color: "red", fontSize: "0.9rem", margin: "6px 0" }}>
-                      ⚠️ Oops! There was an issue sending your message. Please try again or email sanketdev521@gmail.com directly.
+                      ⚠️ Oops! There was an issue sending your message. Please email sanketdev521@gmail.com directly or try again.
                     </div>
                   )}
 
