@@ -447,7 +447,7 @@ export default function Testimonials() {
               </div>
 
               <p className="modal-sub">
-                Worked with Sanket Raj? Drop your review below to feature it live on the portfolio website!
+                Worked with Sanket? Drop your review below to feature it live on the portfolio website!
               </p>
 
               {/* Mobile View Tab Switcher */}
