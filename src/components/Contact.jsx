@@ -101,7 +101,7 @@ export default function Contact() {
             style={{
               display: "flex",
               alignItems: "center",
-              justify-content: "center",
+              justifyContent: "center",
               textDecoration: "none",
               cursor: "pointer",
               width: "100%",
