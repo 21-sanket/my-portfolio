@@ -6,6 +6,30 @@ export default function Contact() {
   const [status, setStatus] = useState("IDLE"); // IDLE, SUBMITTING, SUCCESS, ERROR
   const [showQuickForm, setShowQuickForm] = useState(false);
 
+  // Dynamically resolve Formspree endpoint from Vercel environment variables (ID or URL)
+  const getFormEndpoint = () => {
+    const raw =
+      import.meta.env.VITE_FORMSPREE_ID ||
+      import.meta.env.FORMSPREE_ID ||
+      import.meta.env.VITE_FORMSPREE_URL ||
+      import.meta.env.FORMSPREE_URL ||
+      import.meta.env.VITE_FORMSPREE_KEY ||
+      import.meta.env.FORMSPREE_KEY ||
+      import.meta.env.VITE_FORMSPREE_ENDPOINT ||
+      import.meta.env.FORMSPREE_ENDPOINT;
+
+    if (raw && typeof raw === "string" && raw.trim() !== "") {
+      const val = raw.trim();
+      if (val.startsWith("http://") || val.startsWith("https://")) {
+        return val;
+      }
+      return `https://formspree.io/f/${val}`;
+    }
+
+    // Fallback to direct FormSubmit AJAX endpoint if no env var is set
+    return "https://formsubmit.co/ajax/sanketdev521@gmail.com";
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
@@ -13,11 +37,7 @@ export default function Contact() {
     setStatus("SUBMITTING");
 
     try {
-      // Use FormSubmit AJAX endpoint directed to sanketdev521@gmail.com (or Formspree if env variable set)
-      const formspreeId = import.meta.env.VITE_FORMSPREE_ID;
-      const endpoint = formspreeId
-        ? `https://formspree.io/f/${formspreeId}`
-        : "https://formsubmit.co/ajax/sanketdev521@gmail.com";
+      const endpoint = getFormEndpoint();
 
       const response = await fetch(endpoint, {
         method: "POST",
@@ -37,11 +57,11 @@ export default function Contact() {
 
       const data = await response.json().catch(() => ({}));
 
-      if (response.ok || data.success === "true" || data.success === true) {
+      if (response.ok || data.ok || data.success === "true" || data.success === true) {
         setStatus("SUCCESS");
         setFormData({ name: "", email: "", message: "" });
       } else {
-        console.error("Submission failed:", data);
+        console.error("Form submission failed:", data);
         setStatus("ERROR");
       }
     } catch (err) {
