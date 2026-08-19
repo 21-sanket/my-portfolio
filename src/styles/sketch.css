@@ -1436,29 +1436,84 @@ button:hover {
   margin-bottom: 10px;
 }
 
+/* MOBILE MODAL TABS */
+.mobile-modal-tabs {
+  display: none;
+}
+
 /* MOBILE RESPONSIVE MODAL */
-@media (max-width: 850px) {
-  .review-modal {
-    top: 50%;
-    transform: translate(-50%, -50%);
-    padding: 16px;
+@media (max-width: 768px) {
+  .mobile-modal-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+    background: var(--yellow);
+    padding: 4px;
+    border: 2px solid black;
+    box-shadow: 2px 2px 0 black;
   }
+
+  .mobile-tab-btn {
+    flex: 1;
+    padding: 8px 12px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: bold;
+    border: 1.5px solid transparent;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .mobile-tab-btn.active {
+    background: white;
+    border-color: black;
+    box-shadow: 2px 2px 0 black;
+  }
+
+  .review-modal-backdrop {
+    padding: 10px 8px;
+  }
+
+  .review-modal {
+    width: 96vw;
+    max-height: 94vh;
+    padding: 14px;
+  }
+
   .modal-body-layout {
     grid-template-columns: 1fr;
-    display: flex;
-    flex-direction: column-reverse; /* Preview card on top for mobile */
+    display: block;
   }
-  .preview-pane {
-    position: relative;
-    top: 0;
-    max-height: none;
+
+  .show-mobile-form .review-form {
+    display: flex !important;
+  }
+
+  .show-mobile-form .preview-pane {
+    display: none !important;
+  }
+
+  .show-mobile-preview .review-form {
+    display: none !important;
+  }
+
+  .show-mobile-preview .preview-pane {
+    display: block !important;
     width: 100%;
-    margin-bottom: 15px;
   }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 16px !important; /* Prevents mobile Safari tap zoom */
+  }
+
   .testimonials-stats-bar {
     flex-direction: column;
     gap: 15px;
   }
+
   .stat-divider {
     display: none;
   }
@@ -1466,7 +1521,7 @@ button:hover {
 
 @media (max-width: 600px) {
   .testimonials-section {
-    padding: 40px 16px;
+    padding: 40px 14px;
   }
   .form-row-2 {
     grid-template-columns: 1fr;

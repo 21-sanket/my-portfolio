@@ -105,9 +105,13 @@ export default function Testimonials() {
   // Hover state for star rating picker
   const [hoverRating, setHoverRating] = useState(0);
 
+  // State for mobile view tabs ("form" or "preview")
+  const [mobileTab, setMobileTab] = useState("form");
+
   // Lock body scroll when modal is open
   useEffect(() => {
     document.body.style.overflow = isModalOpen ? "hidden" : "";
+    if (isModalOpen) setMobileTab("form");
     return () => {
       document.body.style.overflow = "";
     };
@@ -446,7 +450,25 @@ export default function Testimonials() {
                 Worked with Sanket Raj? Drop your review below to feature it live on the portfolio website!
               </p>
 
-              <div className="modal-body-layout">
+              {/* Mobile View Tab Switcher */}
+              <div className="mobile-modal-tabs">
+                <button
+                  type="button"
+                  className={`mobile-tab-btn ${mobileTab === "form" ? "active" : ""}`}
+                  onClick={() => setMobileTab("form")}
+                >
+                  ✍️ Write Review
+                </button>
+                <button
+                  type="button"
+                  className={`mobile-tab-btn ${mobileTab === "preview" ? "active" : ""}`}
+                  onClick={() => setMobileTab("preview")}
+                >
+                  👁️ Live Preview
+                </button>
+              </div>
+
+              <div className={`modal-body-layout show-mobile-${mobileTab}`}>
                 {/* FORM */}
                 <form className="review-form" onSubmit={handleSubmitReview}>
                   <div className="form-row-2">
