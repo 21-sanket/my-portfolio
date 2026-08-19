@@ -3,17 +3,44 @@ import { useState } from "react";
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState("IDLE"); // IDLE, SUBMITTING, SUCCESS, ERROR
   const [showQuickForm, setShowQuickForm] = useState(false);
 
-  const handleSubmit = (e) => {
+  // You can set your Formspree Form ID in .env as VITE_FORMSPREE_ID or paste your Formspree endpoint ID below:
+  const FORMSPREE_ID = import.meta.env.VITE_FORMSPREE_ID || "xvgopkzw";
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: "", email: "", message: "" });
-    }, 4000);
+
+    setStatus("SUBMITTING");
+
+    try {
+      const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _replyto: formData.email,
+          _subject: `Portfolio Message from ${formData.name}`,
+        }),
+      });
+
+      if (response.ok) {
+        setStatus("SUCCESS");
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        setStatus("ERROR");
+      }
+    } catch (err) {
+      console.error("Formspree submission error:", err);
+      setStatus("ERROR");
+    }
   };
 
   return (
@@ -143,9 +170,9 @@ export default function Contact() {
               animate={{ opacity: 1, height: "auto" }}
               style={{ marginTop: "15px" }}
             >
-              {submitted ? (
-                <div style={{ padding: "15px", color: "green", fontWeight: "bold" }}>
-                  🎉 Thank you! Your message has been sent.
+              {status === "SUCCESS" ? (
+                <div style={{ padding: "16px", background: "#d4edda", border: "2px solid #155724", color: "#155724", fontWeight: "bold", borderRadius: "6px" }}>
+                  🎉 Thank you! Your message has been sent to sanketdev521@gmail.com. I'll get back to you shortly!
                 </div>
               ) : (
                 <form className="contact-form" onSubmit={handleSubmit}>
@@ -169,13 +196,21 @@ export default function Contact() {
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     required
                   />
+
+                  {status === "ERROR" && (
+                    <div style={{ color: "red", fontSize: "0.9rem", margin: "6px 0" }}>
+                      ⚠️ Oops! There was an issue sending your message. Please try again or email sanketdev521@gmail.com directly.
+                    </div>
+                  )}
+
                   <motion.button
                     type="submit"
+                    disabled={status === "SUBMITTING"}
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
-                    style={{ marginTop: "10px", width: "100%" }}
+                    style={{ marginTop: "10px", width: "100%", opacity: status === "SUBMITTING" ? 0.7 : 1 }}
                   >
-                    Send Quick Message
+                    {status === "SUBMITTING" ? "Sending to Email..." : "Send Quick Message ✉️"}
                   </motion.button>
                 </form>
               )}
