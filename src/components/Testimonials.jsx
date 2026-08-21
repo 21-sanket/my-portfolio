@@ -158,7 +158,7 @@ export default function Testimonials() {
   ).toFixed(1);
 
   // Submit Handler
-  const handleSubmitReview = (e) => {
+  const handleSubmitReview = async (e) => {
     e.preventDefault();
     if (!newReview.name || !newReview.text) return;
 
@@ -184,7 +184,7 @@ export default function Testimonials() {
     const updated = [reviewToAdd, ...testimonials];
     setTestimonials(updated);
 
-    // Save only user-added items to localStorage
+    // 1. Save locally
     try {
       const userAdded = updated.filter((item) => item.id.startsWith("user-"));
       localStorage.setItem(
@@ -195,8 +195,33 @@ export default function Testimonials() {
       console.error("Error saving to localStorage", err);
     }
 
+    // 2. Dispatch email notification to sanketdev521@gmail.com so Sanket gets notified instantly!
+    try {
+      fetch("https://formsubmit.co/ajax/sanketdev521@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          _subject: `🌟 New Client Review Submitted by ${reviewToAdd.name}`,
+          name: reviewToAdd.name,
+          role: reviewToAdd.role,
+          company: reviewToAdd.company,
+          rating: `${reviewToAdd.rating} / 5 Stars`,
+          category: reviewToAdd.category,
+          project: reviewToAdd.project,
+          review_text: reviewToAdd.text,
+          link: reviewToAdd.link || "None",
+          _captcha: "false",
+        }),
+      }).catch((err) => console.log("Review notification email error", err));
+    } catch (e) {
+      // non-blocking
+    }
+
     setIsModalOpen(false);
-    setToastMessage("🎉 Thank you! Your review has been published!");
+    setToastMessage("🎉 Thank you! Your review has been submitted and published!");
 
     // Reset form
     setNewReview({
