@@ -82,12 +82,18 @@ const COLOR_OPTIONS = [
   { label: "Yellow", bg: "var(--yellow)", color: "#b58900" },
 ];
 
+// Global Cloud Database Master Index ID
+const CLOUD_MASTER_INDEX_ID = "ff8081819ff5b11001a022eaf3346935";
+const CLOUD_API_BASE = "https://api.restful-api.dev/objects";
+
 export default function Testimonials() {
   const [testimonials, setTestimonials] = useState(INITIAL_TESTIMONIALS);
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
+  const [mobileTab, setMobileTab] = useState("form");
+  const [isSyncing, setIsSyncing] = useState(false);
 
   // New review form state
   const [newReview, setNewReview] = useState({
@@ -105,9 +111,6 @@ export default function Testimonials() {
   // Hover state for star rating picker
   const [hoverRating, setHoverRating] = useState(0);
 
-  // State for mobile view tabs ("form" or "preview")
-  const [mobileTab, setMobileTab] = useState("form");
-
   // Lock body scroll when modal is open
   useEffect(() => {
     document.body.style.overflow = isModalOpen ? "hidden" : "";
@@ -117,20 +120,73 @@ export default function Testimonials() {
     };
   }, [isModalOpen]);
 
-  // Load reviews from localStorage on mount
+  // Load reviews from Global Cloud Database + LocalStorage on mount
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("sanket_portfolio_testimonials");
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          // Merge custom reviews ahead of initial reviews
-          setTestimonials([...parsed, ...INITIAL_TESTIMONIALS]);
+    let isMounted = true;
+
+    async function loadCloudTestimonials() {
+      try {
+        setIsSyncing(true);
+
+        // 1. Fetch Master Index of Cloud Review IDs
+        const indexRes = await fetch(`${CLOUD_API_BASE}/${CLOUD_MASTER_INDEX_ID}`).then((r) =>
+          r.ok ? r.json() : null
+        );
+
+        let cloudReviews = [];
+
+        if (indexRes && indexRes.data && Array.isArray(indexRes.data.reviewIds) && indexRes.data.reviewIds.length > 0) {
+          const idsQuery = indexRes.data.reviewIds.map((id) => `id=${id}`).join("&");
+          const itemsRes = await fetch(`${CLOUD_API_BASE}?${idsQuery}`).then((r) =>
+            r.ok ? r.json() : null
+          );
+
+          if (Array.isArray(itemsRes)) {
+            cloudReviews = itemsRes
+              .map((item) => (item && item.data ? { ...item.data, id: item.id || item.data.id } : null))
+              .filter(Boolean);
+          }
         }
+
+        // 2. Also check LocalStorage fallback
+        let localReviews = [];
+        try {
+          const saved = localStorage.getItem("sanket_portfolio_testimonials");
+          if (saved) {
+            localReviews = JSON.parse(saved);
+          }
+        } catch (e) {
+          // fallback
+        }
+
+        // Combine Cloud + Local + Initial (Deduplicating by text/id)
+        const combinedUserReviews = [...cloudReviews, ...localReviews];
+        const uniqueUserReviews = [];
+        const seenTexts = new Set();
+
+        for (const item of combinedUserReviews) {
+          const key = (item.text || "").toLowerCase().trim();
+          if (key && !seenTexts.has(key)) {
+            seenTexts.add(key);
+            uniqueUserReviews.push(item);
+          }
+        }
+
+        if (isMounted) {
+          setTestimonials([...uniqueUserReviews, ...INITIAL_TESTIMONIALS]);
+        }
+      } catch (err) {
+        console.error("Cloud testimonials sync error:", err);
+      } finally {
+        if (isMounted) setIsSyncing(false);
       }
-    } catch (e) {
-      console.error("Failed to load saved testimonials", e);
     }
+
+    loadCloudTestimonials();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // Filter logic
@@ -157,7 +213,7 @@ export default function Testimonials() {
     testimonials.reduce((acc, curr) => acc + curr.rating, 0) / totalReviews
   ).toFixed(1);
 
-  // Submit Handler
+  // Submit Handler (Posts to Global Cloud DB + Email Notification + Local State)
   const handleSubmitReview = async (e) => {
     e.preventDefault();
     if (!newReview.name || !newReview.text) return;
@@ -181,12 +237,13 @@ export default function Testimonials() {
       link: newReview.link.trim(),
     };
 
+    // 1. Instant UI update
     const updated = [reviewToAdd, ...testimonials];
     setTestimonials(updated);
 
-    // 1. Save locally
+    // 2. Save locally
     try {
-      const userAdded = updated.filter((item) => item.id.startsWith("user-"));
+      const userAdded = updated.filter((item) => item.id && item.id.startsWith("user-"));
       localStorage.setItem(
         "sanket_portfolio_testimonials",
         JSON.stringify(userAdded)
@@ -195,7 +252,43 @@ export default function Testimonials() {
       console.error("Error saving to localStorage", err);
     }
 
-    // 2. Dispatch email notification to sanketdev521@gmail.com so Sanket gets notified instantly!
+    // 3. Post to GLOBAL CLOUD DATABASE so ALL visitors worldwide see it immediately!
+    try {
+      const postRes = await fetch(CLOUD_API_BASE, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: "sanket_portfolio_review",
+          data: reviewToAdd,
+        }),
+      }).then((r) => (r.ok ? r.json() : null));
+
+      if (postRes && postRes.id) {
+        // Update Master Cloud Index
+        const indexRes = await fetch(`${CLOUD_API_BASE}/${CLOUD_MASTER_INDEX_ID}`).then((r) =>
+          r.ok ? r.json() : null
+        );
+        const currentIds =
+          indexRes && indexRes.data && Array.isArray(indexRes.data.reviewIds)
+            ? indexRes.data.reviewIds
+            : [];
+
+        const updatedIds = [postRes.id, ...currentIds];
+
+        await fetch(`${CLOUD_API_BASE}/${CLOUD_MASTER_INDEX_ID}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: "sanket_reviews_index",
+            data: { reviewIds: updatedIds },
+          }),
+        });
+      }
+    } catch (err) {
+      console.error("Cloud DB post error:", err);
+    }
+
+    // 4. Dispatch Email Notification to sanketdev521@gmail.com
     try {
       fetch("https://formsubmit.co/ajax/sanketdev521@gmail.com", {
         method: "POST",
@@ -221,7 +314,7 @@ export default function Testimonials() {
     }
 
     setIsModalOpen(false);
-    setToastMessage("🎉 Thank you! Your review has been submitted and published!");
+    setToastMessage("🎉 Thank you! Your review has been published live for everyone!");
 
     // Reset form
     setNewReview({
@@ -387,7 +480,7 @@ export default function Testimonials() {
         <div className="testimonials-grid">
           {filteredTestimonials.map((t, idx) => (
             <motion.div
-              key={t.id}
+              key={t.id || idx}
               className="testimonial-card sketch-box"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -402,9 +495,9 @@ export default function Testimonials() {
               <div className="t-card-header">
                 <div
                   className="avatar-badge"
-                  style={{ background: t.avatarBg, color: t.avatarColor, borderColor: "black" }}
+                  style={{ background: t.avatarBg || "var(--blue-light)", color: t.avatarColor || "var(--blue)", borderColor: "black" }}
                 >
-                  {getInitials(name = t.name)}
+                  {getInitials(t.name)}
                 </div>
 
                 <div className="t-author-info">
@@ -429,7 +522,7 @@ export default function Testimonials() {
 
               {/* FOOTER DATE & LINK */}
               <div className="t-card-footer">
-                <span className="t-date">{t.date}</span>
+                <span className="t-date">{t.date || "Client Review"}</span>
                 {t.link && (
                   <a href={t.link} target="_blank" rel="noreferrer" className="t-link">
                     🔗 Verified Link
