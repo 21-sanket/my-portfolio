@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { contact } from "../data/resume";
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -85,8 +86,7 @@ export default function Contact() {
         whileInView={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
-        I'm open to freelance full-stack web development contracts, custom application design scoping,
-        and scalable digital architecture engagements. Let's build something impactful together.
+        {contact.contactDesc}
       </motion.p>
 
       <motion.div
@@ -98,18 +98,18 @@ export default function Contact() {
         {/* CONTACT INFO */}
         <p style={{ margin: "5px 0", fontSize: "1.05rem" }}>
           <strong>Email:</strong>{" "}
-          <a href="mailto:sanketdev521@gmail.com" style={{ color: "var(--blue)", textDecoration: "underline" }}>
-            sanketdev521@gmail.com
+          <a href={`mailto:${contact.email}`} style={{ color: "var(--blue)", textDecoration: "underline" }}>
+            {contact.email}
           </a>
         </p>
         <p style={{ margin: "5px 0", fontSize: "1.05rem" }}>
-          <strong>Location:</strong> Bangalore, India
+          <strong>Location:</strong> {contact.location}
         </p>
 
         {/* QUICK CONTACT LINKS */}
         <div className="contact-links" style={{ margin: "18px 0" }}>
           <a
-            href="https://wa.me/917979713506?text=Hi%20Sanket,%20I'd%20like%20to%20discuss%20a%20development%20project."
+            href={contact.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
             style={{ fontWeight: "bold" }}
@@ -117,7 +117,7 @@ export default function Contact() {
             💬 WhatsApp
           </a>
           <a
-            href="https://github.com/21-sanket"
+            href={contact.github}
             target="_blank"
             rel="noopener noreferrer"
             style={{ fontWeight: "bold" }}
@@ -147,7 +147,7 @@ export default function Contact() {
           </p>
 
           <motion.a
-            href="https://client-intake-form.tiiny.site"
+            href={contact.intakeForm}
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.03, rotate: -0.5 }}

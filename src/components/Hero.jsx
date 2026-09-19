@@ -1,6 +1,7 @@
 // import profile from "../assets/profile-sketch.png";
 import { motion } from "framer-motion";
 import profile from "../assets/cartoon-profile-sketch.png";
+import { meta } from "../data/resume";
 
 export default function Hero() {
   return (
@@ -20,7 +21,7 @@ export default function Hero() {
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
         >
-          Hi, I'm <span className="highlight">Sanket Raj</span>
+          Hi, I'm <span className="highlight">{meta.name}</span>
         </motion.h1>
 
         {/* DRAW LINE */}
@@ -45,7 +46,7 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
-          Full Stack MERN & AI/ML Engineer
+          {meta.role}
         </motion.h3>
 
         {/* DESCRIPTION */}
@@ -94,7 +95,7 @@ export default function Hero() {
         animate={{ opacity: 1, x: 0, rotate: 1 }}
         transition={{ delay: 0.5 }}
       >
-        <img src={profile} alt="Sanket Raj" />
+        <img src={profile} alt={meta.name} />
       </motion.div>
 
     </motion.section>

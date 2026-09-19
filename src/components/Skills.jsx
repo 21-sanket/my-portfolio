@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { skills as skillNames } from "../data/resume";
 
 // ICONS (add more later if you download them)
 import cssIcon from "../assets/icons/css.png";
@@ -23,29 +24,32 @@ import tailwindIcon from "../assets/icons/tailwind.png";
 import tensorflowIcon from "../assets/icons/tensorflow.png";
 import typescriptIcon from "../assets/icons/typescript.png";
 
-const skills = [
-  { name: "HTML", icon: htmlIcon },
-  { name: "CSS", icon: cssIcon },
-  { name: "JavaScript", icon: javascriptIcon },
-  { name: "TypeScript", icon: typescriptIcon },
-  { name: "React", icon: reactIcon },
-  { name: "Node.js", icon: nodeIcon },
-  { name: "MongoDB", icon: mongoIcon },
-  { name: "Express", icon: expressIcon },
-  { name: "Tailwind", icon: tailwindIcon },
-  { name: "RestAPI", icon: restapiIcon },
-  { name: "FastAPI", icon: fastapiIcon },
-  { name: "Python", icon: pythonIcon },
-  { name: "Machine Learning", icon: mlIcon },
-  { name: "Tensorflow", icon: tensorflowIcon },
-  { name: "Scikit-learn", icon: scikitlearnIcon },
-  { name: "LangChain", icon: langchainIcon },
-  { name: "MySQL", icon: mysqlIcon },
-  { name: "Flask", icon: flaskIcon },
-  { name: "GitHub", icon: githubIcon },
-  { name: "Linux", icon: linuxIcon },
-  { name: "Postman", icon: postmanIcon },
-];
+// Map skill names (from data/resume.js) to their icon assets
+const iconMap = {
+  HTML: htmlIcon,
+  CSS: cssIcon,
+  JavaScript: javascriptIcon,
+  TypeScript: typescriptIcon,
+  React: reactIcon,
+  "Node.js": nodeIcon,
+  MongoDB: mongoIcon,
+  Express: expressIcon,
+  Tailwind: tailwindIcon,
+  RestAPI: restapiIcon,
+  FastAPI: fastapiIcon,
+  Python: pythonIcon,
+  "Machine Learning": mlIcon,
+  Tensorflow: tensorflowIcon,
+  "Scikit-learn": scikitlearnIcon,
+  LangChain: langchainIcon,
+  MySQL: mysqlIcon,
+  Flask: flaskIcon,
+  GitHub: githubIcon,
+  Linux: linuxIcon,
+  Postman: postmanIcon,
+};
+
+const skills = skillNames.map((name) => ({ name, icon: iconMap[name] }));
 
 export default function Skills() {
   return (
@@ -58,7 +62,7 @@ export default function Skills() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        Skills & Technologies
+        Skills &amp; Technologies
       </motion.h2>
 
       {/* GRID */}
