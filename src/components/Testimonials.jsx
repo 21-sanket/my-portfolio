@@ -91,6 +91,7 @@ function getFormattedTestimonialDate(t) {
 
   let ts = null;
 
+  // 1. Direct timestamp properties
   if (typeof t.createdAt === "number" && !isNaN(t.createdAt)) {
     ts = t.createdAt;
   } else if (typeof t.createdAt === "string" && !isNaN(Date.parse(t.createdAt))) {
@@ -99,16 +100,41 @@ function getFormattedTestimonialDate(t) {
     ts = t.timestamp;
   } else if (typeof t.timestamp === "string" && !isNaN(Date.parse(t.timestamp))) {
     ts = Date.parse(t.timestamp);
-  } else if (t.id && typeof t.id === "string") {
-    const match = t.id.match(/^user-(\d+)$/);
-    if (match && match[1]) {
-      const parsed = parseInt(match[1], 10);
-      if (!isNaN(parsed) && parsed > 100000000000) {
+  }
+
+  // 2. Check for numeric user/ms timestamp in IDs
+  if (!ts) {
+    const idStr = `${t.id || ""} ${t.dataId || ""} ${t.cloudId || ""}`;
+    const userMatch = idStr.match(/user-(\d{10,14})/);
+    if (userMatch && userMatch[1]) {
+      const parsed = parseInt(userMatch[1], 10);
+      if (!isNaN(parsed) && parsed > 1000000000000) {
         ts = parsed;
+      }
+    } else {
+      const msMatch = idStr.match(/(\d{13})/);
+      if (msMatch && msMatch[1]) {
+        const parsed = parseInt(msMatch[1], 10);
+        if (!isNaN(parsed) && parsed > 1000000000000) {
+          ts = parsed;
+        }
       }
     }
   }
 
+  // 3. Hex timestamp embedded in restful-api cloud IDs (e.g. ff808181... containing 1a[0-9a-f]{9})
+  if (!ts) {
+    const idStr = `${t.id || ""} ${t.cloudId || ""}`;
+    const hexMatch = idStr.match(/(1a[0-9a-f]{9,10})/i);
+    if (hexMatch && hexMatch[1]) {
+      const parsedHex = parseInt(hexMatch[1], 16);
+      if (!isNaN(parsedHex) && parsedHex > 1000000000000) {
+        ts = parsedHex;
+      }
+    }
+  }
+
+  // 4. Calculate relative time if timestamp is valid
   if (ts) {
     const diffMs = Date.now() - ts;
     if (diffMs < 0 || diffMs < 45000) {
@@ -141,6 +167,7 @@ function getFormattedTestimonialDate(t) {
     return `${diffYear} ${diffYear === 1 ? "year" : "years"} ago`;
   }
 
+  // 5. If t.date is defined and not "Just Now", return static date
   if (t.date && t.date.trim() !== "" && t.date.toLowerCase() !== "just now") {
     return t.date;
   }
@@ -212,7 +239,17 @@ export default function Testimonials() {
 
           if (Array.isArray(itemsRes)) {
             cloudReviews = itemsRes
-              .map((item) => (item && item.data ? { ...item.data, id: item.id || item.data.id } : null))
+              .map((item) => {
+                if (!item || !item.data) return null;
+                const dataObj = item.data;
+                const effectiveId = dataObj.id || item.id;
+                return {
+                  ...dataObj,
+                  id: effectiveId,
+                  dataId: dataObj.id,
+                  cloudId: item.id,
+                };
+              })
               .filter(Boolean);
           }
         }
