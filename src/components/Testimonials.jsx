@@ -86,55 +86,58 @@ const COLOR_OPTIONS = [
 const CLOUD_MASTER_INDEX_ID = "ff8081819ff5b11001a022eaf3346935";
 const CLOUD_API_BASE = "https://api.restful-api.dev/objects";
 
-function getFormattedTestimonialDate(t) {
-  if (!t) return "Client Review";
-
-  let ts = null;
+function getTestimonialTimestamp(t) {
+  if (!t) return null;
 
   // 1. Direct timestamp properties
-  if (typeof t.createdAt === "number" && !isNaN(t.createdAt)) {
-    ts = t.createdAt;
-  } else if (typeof t.createdAt === "string" && !isNaN(Date.parse(t.createdAt))) {
-    ts = Date.parse(t.createdAt);
-  } else if (typeof t.timestamp === "number" && !isNaN(t.timestamp)) {
-    ts = t.timestamp;
-  } else if (typeof t.timestamp === "string" && !isNaN(Date.parse(t.timestamp))) {
-    ts = Date.parse(t.timestamp);
+  if (typeof t.createdAt === "number" && !isNaN(t.createdAt) && t.createdAt > 1000000000000) {
+    return t.createdAt;
+  }
+  if (typeof t.createdAt === "string" && !isNaN(Date.parse(t.createdAt))) {
+    return Date.parse(t.createdAt);
+  }
+  if (typeof t.timestamp === "number" && !isNaN(t.timestamp) && t.timestamp > 1000000000000) {
+    return t.timestamp;
+  }
+  if (typeof t.timestamp === "string" && !isNaN(Date.parse(t.timestamp))) {
+    return Date.parse(t.timestamp);
   }
 
   // 2. Check for numeric user/ms timestamp in IDs
-  if (!ts) {
-    const idStr = `${t.id || ""} ${t.dataId || ""} ${t.cloudId || ""}`;
-    const userMatch = idStr.match(/user-(\d{10,14})/);
-    if (userMatch && userMatch[1]) {
-      const parsed = parseInt(userMatch[1], 10);
-      if (!isNaN(parsed) && parsed > 1000000000000) {
-        ts = parsed;
-      }
-    } else {
-      const msMatch = idStr.match(/(\d{13})/);
-      if (msMatch && msMatch[1]) {
-        const parsed = parseInt(msMatch[1], 10);
-        if (!isNaN(parsed) && parsed > 1000000000000) {
-          ts = parsed;
-        }
-      }
+  const idStr = `${t.id || ""} ${t.dataId || ""} ${t.cloudId || ""}`;
+  const userMatch = idStr.match(/user-(\d{10,14})/i);
+  if (userMatch && userMatch[1]) {
+    const parsed = parseInt(userMatch[1], 10);
+    if (!isNaN(parsed) && parsed > 1000000000000) {
+      return parsed;
     }
   }
 
-  // 3. Hex timestamp embedded in restful-api cloud IDs (e.g. ff808181... containing 1a[0-9a-f]{9})
-  if (!ts) {
-    const idStr = `${t.id || ""} ${t.cloudId || ""}`;
-    const hexMatch = idStr.match(/(1a[0-9a-f]{9,10})/i);
-    if (hexMatch && hexMatch[1]) {
-      const parsedHex = parseInt(hexMatch[1], 16);
-      if (!isNaN(parsedHex) && parsedHex > 1000000000000) {
-        ts = parsedHex;
-      }
+  const msMatch = idStr.match(/(\d{13})/);
+  if (msMatch && msMatch[1]) {
+    const parsed = parseInt(msMatch[1], 10);
+    if (!isNaN(parsed) && parsed > 1000000000000) {
+      return parsed;
     }
   }
 
-  // 4. Calculate relative time if timestamp is valid
+  // 3. Hex timestamp embedded in restful-api cloud IDs (e.g. ff808181... containing 1a[0-9a-f]{9,11})
+  const hexMatch = idStr.match(/(1a[0-9a-f]{9,11})/i);
+  if (hexMatch && hexMatch[1]) {
+    const parsedHex = parseInt(hexMatch[1], 16);
+    if (!isNaN(parsedHex) && parsedHex > 1000000000000) {
+      return parsedHex;
+    }
+  }
+
+  return null;
+}
+
+function getFormattedTestimonialDate(t) {
+  if (!t) return "Client Review";
+
+  const ts = getTestimonialTimestamp(t);
+
   if (ts) {
     const diffMs = Date.now() - ts;
     if (diffMs < 0 || diffMs < 45000) {
@@ -167,12 +170,29 @@ function getFormattedTestimonialDate(t) {
     return `${diffYear} ${diffYear === 1 ? "year" : "years"} ago`;
   }
 
-  // 5. If t.date is defined and not "Just Now", return static date
+  // If t.date is defined and not "Just Now", return static date
   if (t.date && t.date.trim() !== "" && t.date.toLowerCase() !== "just now") {
     return t.date;
   }
 
-  return t.date || "Client Review";
+  // Fallback for legacy review objects with date: "Just Now" but no valid timestamp
+  return "1 month ago";
+}
+
+function isReviewNew(t) {
+  if (!t) return false;
+
+  const ts = getTestimonialTimestamp(t);
+  if (ts) {
+    const diffMs = Date.now() - ts;
+    const diffDays = diffMs / (1000 * 60 * 60 * 24);
+    // NEW badge is strictly restricted to reviews less than 1 month (30 days) old
+    return diffDays >= 0 && diffDays < 30;
+  }
+
+  if (t.isSessionNew) return true;
+
+  return false;
 }
 
 export default function Testimonials() {
@@ -598,7 +618,7 @@ export default function Testimonials() {
               {/* Card Tape accent */}
               <div className="card-pin-doodle">📌</div>
 
-              {t.isNew && <span className="new-badge">✨ NEW</span>}
+              {isReviewNew(t) && <span className="new-badge">✨ NEW</span>}
 
               <div className="t-card-header">
                 <div
