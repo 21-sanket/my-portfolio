@@ -86,6 +86,68 @@ const COLOR_OPTIONS = [
 const CLOUD_MASTER_INDEX_ID = "ff8081819ff5b11001a022eaf3346935";
 const CLOUD_API_BASE = "https://api.restful-api.dev/objects";
 
+function getFormattedTestimonialDate(t) {
+  if (!t) return "Client Review";
+
+  let ts = null;
+
+  if (typeof t.createdAt === "number" && !isNaN(t.createdAt)) {
+    ts = t.createdAt;
+  } else if (typeof t.createdAt === "string" && !isNaN(Date.parse(t.createdAt))) {
+    ts = Date.parse(t.createdAt);
+  } else if (typeof t.timestamp === "number" && !isNaN(t.timestamp)) {
+    ts = t.timestamp;
+  } else if (typeof t.timestamp === "string" && !isNaN(Date.parse(t.timestamp))) {
+    ts = Date.parse(t.timestamp);
+  } else if (t.id && typeof t.id === "string") {
+    const match = t.id.match(/^user-(\d+)$/);
+    if (match && match[1]) {
+      const parsed = parseInt(match[1], 10);
+      if (!isNaN(parsed) && parsed > 100000000000) {
+        ts = parsed;
+      }
+    }
+  }
+
+  if (ts) {
+    const diffMs = Date.now() - ts;
+    if (diffMs < 0 || diffMs < 45000) {
+      return "Just Now";
+    }
+
+    const diffSec = Math.floor(diffMs / 1000);
+    const diffMin = Math.floor(diffSec / 60);
+    const diffHour = Math.floor(diffMin / 60);
+    const diffDay = Math.floor(diffHour / 24);
+    const diffWeek = Math.floor(diffDay / 7);
+    const diffMonth = Math.floor(diffDay / 30);
+    const diffYear = Math.floor(diffDay / 365);
+
+    if (diffMin < 60) {
+      return `${diffMin} ${diffMin === 1 ? "min" : "mins"} ago`;
+    }
+    if (diffHour < 24) {
+      return `${diffHour} ${diffHour === 1 ? "hour" : "hours"} ago`;
+    }
+    if (diffDay < 7) {
+      return `${diffDay} ${diffDay === 1 ? "day" : "days"} ago`;
+    }
+    if (diffWeek < 4) {
+      return `${diffWeek} ${diffWeek === 1 ? "week" : "weeks"} ago`;
+    }
+    if (diffMonth < 12) {
+      return `${diffMonth} ${diffMonth === 1 ? "month" : "months"} ago`;
+    }
+    return `${diffYear} ${diffYear === 1 ? "year" : "years"} ago`;
+  }
+
+  if (t.date && t.date.trim() !== "" && t.date.toLowerCase() !== "just now") {
+    return t.date;
+  }
+
+  return t.date || "Client Review";
+}
+
 export default function Testimonials() {
   const [testimonials, setTestimonials] = useState(INITIAL_TESTIMONIALS);
   const [activeCategory, setActiveCategory] = useState("All");
@@ -94,6 +156,13 @@ export default function Testimonials() {
   const [toastMessage, setToastMessage] = useState("");
   const [mobileTab, setMobileTab] = useState("form");
   const [isSyncing, setIsSyncing] = useState(false);
+
+  // Tick state to automatically update relative time strings every minute
+  const [, setTick] = useState(Date.now());
+  useEffect(() => {
+    const timer = setInterval(() => setTick(Date.now()), 60000);
+    return () => clearInterval(timer);
+  }, []);
 
   // New review form state
   const [newReview, setNewReview] = useState({
@@ -220,8 +289,10 @@ export default function Testimonials() {
 
     const chosenColor = COLOR_OPTIONS[newReview.colorIndex];
 
+    const now = Date.now();
     const reviewToAdd = {
-      id: `user-${Date.now()}`,
+      id: `user-${now}`,
+      createdAt: now,
       name: newReview.name.trim(),
       role: newReview.role.trim() || "Client Partner",
       company: newReview.company.trim() || "Independent",
@@ -522,7 +593,7 @@ export default function Testimonials() {
 
               {/* FOOTER DATE & LINK */}
               <div className="t-card-footer">
-                <span className="t-date">{t.date || "Client Review"}</span>
+                <span className="t-date">{getFormattedTestimonialDate(t)}</span>
                 {t.link && (
                   <a href={t.link} target="_blank" rel="noreferrer" className="t-link">
                     🔗 Verified Link
