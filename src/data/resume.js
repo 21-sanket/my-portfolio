@@ -33,7 +33,7 @@ export const about = {
 export const experience = [
   {
     role: "Software Development Engineer",
-    company: "Microsoft",
+    company: "Microsoft Corporation",
     location: "Bangalore, India",
     bullets: [
       "Architected and deployed scalable, high-availability microservices and distributed cloud backends on Microsoft Azure.",
