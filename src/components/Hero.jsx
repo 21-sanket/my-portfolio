@@ -56,7 +56,7 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
         >
-          I specialize in crafting robust, scalable, and high-performance digital systems. Over the past 4+ years, I've successfully delivered 15+ high-impact projects, partnering with agile engineering teams to build applications that are as efficient under the hood as they are seamless for the user.
+          I specialize in crafting robust, scalable, and high-performance digital systems. Over the past 4+ years, I've successfully delivered 50+ high-impact projects, partnering with agile engineering teams to build applications that are as efficient under the hood as they are seamless for the user.
         </motion.p>
 
         {/* CTA */}

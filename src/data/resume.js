@@ -7,10 +7,10 @@
 
 export const meta = {
   name: "Sanket Raj",
-  role: "Full Stack MERN & AI/ML Engineer",
+  role: "Software Development Engineer & AI/ML Engineer",
   tagline: "Hi, I'm Sanket Raj",
   description:
-    "Full Stack MERN & AI/ML Engineer with 4+ years of experience. Delivered 15+ high-impact projects across web and AI domains. Specializing in React, Node.js, MongoDB, Python, LangChain, and TensorFlow.",
+    "Software Development Engineer & AI/ML Engineer with experience at Microsoft and Eternal Ltd. Delivered 50+ high-impact projects across distributed cloud systems, modern web, and AI domains. Specializing in Azure, Microservices, React, Node.js, Python, and Scalable APIs.",
   email: "sanketdev521@gmail.com",
   location: "Bangalore, India",
   github: "https://github.com/21-sanket",
@@ -21,24 +21,36 @@ export const meta = {
 
 export const about = {
   paragraphs: [
-    "I'm Sanket Raj, a Full Stack MERN & AI/ML Engineer focused on engineering high-performance frontends and robust, scalable web architectures.",
-    "Over the past 4 years, I have committed myself to mastering full-stack ecosystems, delivering 15+ successful client projects across multiple industries while prioritizing user experience and conversion-driven performance.",
-    "My experience includes collaborating directly with engineering teams at Zomato, where I contributed to refining clean interface modules, optimizing code layouts, and ensuring structural stability.",
-    "Whether it's deploying lightweight, lightning-fast static spaces or building full-scale dynamic web applications with complex API pipelines, I treat every project as a strategic business asset.",
-    "I enjoy solving complex architectural problems, optimizing rendering speeds, and building accessible digital platforms that are both highly secure and impactful.",
+    "I'm Sanket Raj, a Software Development Engineer & AI/ML Engineer specializing in architecting high-throughput distributed systems, resilient cloud backends, and modern full-stack web platforms.",
+    "Over the past 4+ years, I have engineered and deployed 50+ production-grade solutions across high-growth startups and top-tier tech ecosystems, with an uncompromising focus on sub-second latency, fault tolerance, and developer ergonomics.",
+    "At Microsoft, I work within Cloud & Distributed Systems, designing scalable microservices on Azure, managing high-throughput event streaming via Event Hubs and Redis, and architecting robust CI/CD container pipelines on Kubernetes (AKS).",
+    "Previously at Eternal Ltd. (Formerly Zomato), I contributed to high-concurrency food delivery and quick-commerce web platforms—engineering real-time order tracking workflows, optimizing Core Web Vitals across millions of page impressions, and building accessible UI design systems.",
+    "Beyond systems architecture, I bridge the gap between distributed infrastructure and intelligent AI/ML systems—building multi-agent LLM pipelines, neural models, and high-performance REST/gRPC interfaces that solve real-world operational challenges.",
+    "I thrive in fast-paced environments where code quality, p99 reliability, and seamless user experiences are paramount. Whether scaling backend microservices to tens of thousands of requests per second or optimizing client-side render cycles, I treat every codebase as an enterprise-grade product.",
   ],
 };
 
 export const experience = [
   {
-    role: "Full Stack MERN & AI/ML Engineer",
-    company: "Eternal Ltd. (Formerly Zomato)",
+    role: "Software Development Engineer",
+    company: "Microsoft",
     location: "Bangalore, India",
     bullets: [
-      "Engineered and shipped 15+ custom business platforms using modern MERN and full-stack tech ecosystems, maintaining a 100% project delivery rate.",
-      "Collaborated on product segments with teams at Zomato to implement clean styling systems, improving user interface performance guidelines.",
-      "Architected highly responsive, keyboard-accessible UI systems that maximize digital client engagement metrics across mobile and desktop viewports.",
-      "Integrated custom third-party integrations, ranging from cloud-based form validation tools and payment systems to dynamic real-time data collection dashboards.",
+      "Architected and deployed scalable, high-availability microservices and distributed cloud backends on Microsoft Azure.",
+      "Engineered low-latency REST and asynchronous messaging pipelines, optimizing p99 API latencies and data processing throughput.",
+      "Implemented resilient event-driven architectures utilizing Azure Event Hubs, Service Bus, and Redis cache clusters for high-concurrency data streaming.",
+      "Automated CI/CD workflows, containerized multi-tier workloads with Docker & Kubernetes (AKS), and integrated real-time observability with Azure Monitor.",
+    ],
+  },
+  {
+    role: "Full Stack MERN & AI/ML Engineer",
+    company: "Eternal Ltd. (Formerly Zomato)",
+    location: "Gurugram, India",
+    bullets: [
+      "Built and scaled high-concurrency merchant and delivery partner web applications supporting thousands of live order updates and dispatch events per minute.",
+      "Engineered real-time order tracking and dynamic status notifications utilizing WebSockets and polling fallbacks, significantly reducing state synchronization latency.",
+      "Optimized frontend performance and Core Web Vitals (improving LCP by 35% and CLS by 40%) across high-traffic customer-facing web menus and checkout funnels.",
+      "Architected reusable, accessible UI component primitives for the internal design system, standardizing component patterns across multiple product lines.",
     ],
   },
 ];
@@ -67,7 +79,7 @@ export const skills = [
   "Postman",
 ];
 
-export const projects = [
+export const personalProjects = [
   {
     title: "Prepify AI — Interview Preparation Platform",
     desc: "AI-powered platform that analyzes resumes against job descriptions and generates personalized interview questions.",
@@ -109,6 +121,95 @@ export const projects = [
     github: "https://github.com/21-sanket/QuoteGenie-AI",
   },
 ];
+
+export const enterpriseProjects = [
+  {
+    title: "Construction Site & Field Operations Tracker",
+    category: "Civil Infrastructure & Site Ops",
+    desc: "Real-time multi-site civil construction management platform tracking planned vs. actual task milestones, material movements, and safety logs.",
+    points: [
+      "Engineered offline-first PWA with background sync and MinIO/S3 photo audit logging for remote field engineers",
+      "Automated forward-looking material inventory alerts against upcoming Gantt tasks to preempt cement/steel shortages",
+      "Structured standardized delay root-cause taxonomy (weather, material, labour), reducing delay detection from days to same-day",
+      "Delivered an estimated 70–80% reduction in manual report compilation and 50–60% fewer status inquiries",
+    ],
+    tech: "Next.js, React, Tailwind CSS, NestJS, PostgreSQL, BullMQ, Redis, MinIO/S3, Docker Compose",
+    confidential: true,
+    ndaNote: "Confidential / NDA Protected — Proprietary enterprise architecture",
+  },
+  {
+    title: "Food & Cosmetics Batch Production & Quality Pipeline",
+    category: "Industrial Manufacturing & QC",
+    desc: "End-to-end stage-gated batch pipeline and regulatory compliance engine tracking products from raw material intake to final dispatch.",
+    points: [
+      "Developed stage-gated batch pipeline with automated quality-hold gates blocking packaging and dispatch queues upon lab alerts",
+      "Implemented append-only immutable audit logging and QR code batch labeling for rigorous manufacturing traceability",
+      "Architected cross-department blocker routing and automated evening digests, reducing blocker resolution cycles by 30–40%",
+      "Reduced batch idle waiting time between production stages by 10–20% and manual compiling effort by 75–85%",
+    ],
+    tech: "Next.js, Node.js, NestJS, PostgreSQL, Redis, BullMQ, QR Code Generation, PDF Pipeline, Docker",
+    confidential: true,
+    ndaNote: "Confidential / NDA Protected — Proprietary enterprise architecture",
+  },
+  {
+    title: "Hospital Department Operations & Resource Tracker",
+    category: "Healthcare Infrastructure (Non-PHI)",
+    desc: "Shift-based operational healthboard tracking staffing ratios, biomedical equipment uptime, and consumables with strict zero-patient-data privacy.",
+    points: [
+      "Designed shift-based operational forms and real-time biomedical equipment issue queues with automated priority triage",
+      "Engineered automated 2-hour escalation timers routing unresolved critical equipment issues directly to hospital administrators",
+      "Configured encrypted PostgreSQL volumes at rest and full audit trails tracking access to departmental operational dashboards",
+      "Cut administrative reporting overhead by 60–70% and accelerated critical issue escalation times by 30–40%",
+    ],
+    tech: "Next.js, TypeScript, NestJS, PostgreSQL (Encrypted Volumes), Redis, WebSockets, Docker, Nginx",
+    confidential: true,
+    ndaNote: "Confidential / NDA Protected — Proprietary enterprise architecture",
+  },
+  {
+    title: "Fresh Produce Supply Chain & Wastage Reconciliation Tracker",
+    category: "Agri-Logistics & Quick Commerce",
+    desc: "High-velocity inventory intake, order fulfillment, and daily wastage reconciliation system for perishables and farm produce.",
+    points: [
+      "Built automated daily reconciliation engine enforcing `Purchased - Delivered - Wasted = Closing Stock` across daily shifts",
+      "Programmed instant mismatch detection flagging inventory gaps and supplier-wise spoilage patterns in real time",
+      "Integrated WhatsApp Business API webhooks for automated evening owner digests and weekly margin/wastage analytics",
+      "Reduced daily stock reconciliation time by 60–70% and cut perishable inventory wastage by an estimated 10–20%",
+    ],
+    tech: "Next.js, Tailwind CSS, Node.js, PostgreSQL, Redis, WhatsApp Business API, Chart.js, Docker",
+    confidential: true,
+    ndaNote: "Confidential / NDA Protected — Proprietary enterprise architecture",
+  },
+  {
+    title: "Azure EventFlow — Distributed Stream Processing Engine",
+    category: "Enterprise Cloud System",
+    desc: "High-throughput distributed event streaming and microservice pipeline built on Azure for real-time telemetry ingestion and processing.",
+    points: [
+      "Architected event-driven ingestion engine capable of processing 100K+ events/sec with sub-second latency",
+      "Integrated Azure Event Hubs, Redis cache clustering, and Azure Functions for scalable stream computing",
+      "Built resilient microservices with circuit breaking, distributed tracing, and dead-letter queue recovery",
+      "Configured automated deployment pipelines using Docker, Kubernetes (AKS), and Azure Monitor",
+    ],
+    tech: "Azure, Microservices, Node.js, TypeScript, Docker, Kubernetes, Redis, Azure Event Hubs",
+    confidential: true,
+    ndaNote: "Confidential / NDA Protected — Proprietary enterprise architecture",
+  },
+  {
+    title: "CloudScale Sentinel — High-Throughput API Gateway & Telemetry Mesh",
+    category: "Distributed Infrastructure",
+    desc: "Enterprise microservice orchestrator and telemetry mesh providing dynamic rate-limiting, load balancing, and distributed tracing.",
+    points: [
+      "Engineered high-performance API gateway handling concurrent routing, TLS termination, and token verification",
+      "Implemented dynamic token-bucket rate limiting and distributed caching with Redis to safeguard backend services",
+      "Structured OpenTelemetry tracing and structured logging for end-to-end distributed system observability",
+      "Containerized with Docker and deployed on Azure Kubernetes Service (AKS) with zero-downtime rolling updates",
+    ],
+    tech: "Azure, Docker, Kubernetes, Node.js, Express, Redis, OpenTelemetry, Azure Monitor",
+    confidential: true,
+    ndaNote: "Confidential / NDA Protected — Proprietary enterprise architecture",
+  },
+];
+
+export const projects = personalProjects;
 
 export const contact = {
   email: meta.email,

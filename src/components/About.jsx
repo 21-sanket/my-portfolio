@@ -2,8 +2,6 @@ import { motion } from "framer-motion";
 import { about, experience } from "../data/resume";
 
 export default function About() {
-  const exp = experience[0];
-
   return (
     <section id="about" className="about-section">
 
@@ -38,14 +36,34 @@ export default function About() {
         >
           <h3>Experience</h3>
 
-          <p><strong>{exp.role}</strong></p>
-          <p>{exp.company}, {exp.location}</p>
+          {experience.map((exp, idx) => (
+            <div
+              key={idx}
+              className="experience-item"
+              style={
+                idx > 0
+                  ? {
+                      marginTop: "20px",
+                      paddingTop: "16px",
+                      borderTop: "2px dashed var(--black)",
+                    }
+                  : {}
+              }
+            >
+              <p>
+                <strong>{exp.role}</strong>
+              </p>
+              <p style={{ fontWeight: 500, marginBottom: "8px", color: "var(--black)" }}>
+                {exp.company} &mdash; {exp.location}
+              </p>
 
-          <ul>
-            {exp.bullets.map((bullet, i) => (
-              <li key={i}>{bullet}</li>
-            ))}
-          </ul>
+              <ul>
+                {exp.bullets.map((bullet, i) => (
+                  <li key={i}>{bullet}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </motion.div>
 
       </div>

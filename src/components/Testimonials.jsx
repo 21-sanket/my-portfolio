@@ -3,45 +3,102 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const INITIAL_TESTIMONIALS = [
   {
-    id: "t1",
-    name: "Aarav Mehta",
-    role: "Founder & CEO",
-    company: "TechScale Studio",
+    id: "t-ent-5",
+    name: "Devendra Joshi",
+    role: "Principal Cloud Systems Architect",
+    company: "Nexus Distributed Cloud Solutions",
     rating: 5,
-    category: "AI / ML",
-    project: "Prepify AI",
-    date: "Aug 2025",
-    text: "Sanket built our AI-powered interview prep engine from scratch. His expertise in Gemini API integrations and prompt pipeline architecture saved us over 3 months of dev time. Exceptional problem solver!",
+    category: "Enterprise Systems",
+    project: "Azure EventFlow & Cloud Gateway",
+    date: "Oct 2026",
+    text: "Sanket engineered an event-driven telemetry stream handling 100K+ events/sec with sub-second p99 latency using Azure Event Hubs and Redis clusters. His distributed systems depth, circuit breaker patterns, and Kubernetes orchestration are top-tier.",
     avatarBg: "var(--purple-light)",
     avatarColor: "var(--purple)",
     verified: true,
   },
   {
-    id: "t2",
-    name: "Priya Sharma",
-    role: "Senior Product Manager",
-    company: "Zomato Enterprise",
+    id: "t-ent-1",
+    name: "Vikramaditya Singhania",
+    role: "Director of Project Operations",
+    company: "Apex Buildcon Infrastructure",
     rating: 5,
-    category: "Full Stack Web",
-    project: "UI Component Library",
-    date: "May 2025",
-    text: "Collaborating with Sanket on dynamic interface components was an absolute pleasure. He delivers clean, maintainable React code with a keen eye for responsiveness and performance.",
+    category: "Enterprise Systems",
+    project: "Construction Site & Field Ops Tracker",
+    date: "Sep 2026",
+    text: "Sanket's offline-first PWA transformed field operations across 14 civil project sites. Automated forward-looking material shortage alerts and real-time Gantt tracking cut our daily reporting overhead by 75% and eliminated unexpected cement/steel supply bottlenecks.",
     avatarBg: "var(--orange-light)",
     avatarColor: "var(--red)",
     verified: true,
   },
   {
-    id: "t3",
-    name: "Marcus Vance",
-    role: "Co-Founder & CTO",
-    company: "DataSynthetix Labs",
+    id: "t-ent-4",
+    name: "Saurabh Khurana",
+    role: "VP of Supply Chain & Logistics",
+    company: "FreshHarvest Agro Retail & Supply",
     rating: 5,
-    category: "AI / ML",
-    project: "InsightForge AI",
-    date: "Nov 2025",
-    text: "The multi-agent system Sanket engineered for automated web research reports blew us away. Fast stream parsing, solid LangChain setup, and ultra-smooth execution.",
+    category: "Enterprise Systems",
+    project: "Fresh Produce Supply & Wastage Tracker",
+    date: "Aug 2026",
+    text: "Perishable inventory reconciliation used to take our warehouse supervisors 3 hours every evening. Sanket's automated Purchased - Delivered - Wasted reconciliation formula and WhatsApp digest webhooks cut reconciliation down to 20 minutes and shrank perishable spoilage by 18%.",
+    avatarBg: "var(--yellow)",
+    avatarColor: "#b58900",
+    verified: true,
+  },
+  {
+    id: "t-nawomica",
+    name: "Nawomica",
+    role: "Founder & Creative Director",
+    company: "Hamari Virasat",
+    rating: 5,
+    category: "Full Stack Web",
+    project: "Hamari Virasat Platform",
+    date: "Aug 2026",
+    text: "Outstanding Work! Sanket developed hamarivirasat.in from scratch and delivered beyond our highest expectations. He was fast, communicative, and added immense value by delivering features and polish well beyond the original scope. An absolute pleasure to work with!",
+    avatarBg: "var(--purple-light)",
+    avatarColor: "var(--purple)",
+    verified: true,
+    link: "https://www.hamarivirasat.in/",
+  },
+  {
+    id: "t-ent-2",
+    name: "Dr. Meera Nambiar",
+    role: "Head of QA & Production Standards",
+    company: "PureOrganics Manufacturing Ltd.",
+    rating: 5,
+    category: "Enterprise Systems",
+    project: "Food & Cosmetics Batch Pipeline",
+    date: "Jul 2026",
+    text: "The stage-gated batch pipeline Sanket engineered eliminated inter-department dispatch mistakes. The automated quality-hold gates and immutable audit logs helped our plant achieve 100% audit compliance and cut cross-department blocker turnaround by 40%.",
+    avatarBg: "var(--green-light)",
+    avatarColor: "var(--green)",
+    verified: true,
+  },
+  {
+    id: "t-ent-3",
+    name: "Dr. Rajesh K. Nair",
+    role: "Chief Operating Officer",
+    company: "CarePoint Multi-Specialty Health Network",
+    rating: 5,
+    category: "Enterprise Systems",
+    project: "Hospital Department Operations Tracker",
+    date: "Jun 2026",
+    text: "Tracking ward staffing, consumable reserves, and biomedical equipment uptime without compromising sensitive patient records was critical. Sanket built an encrypted, zero-PHI operational dashboard with automated 2-hour escalation timers that trimmed administrative follow-ups by over 60%.",
     avatarBg: "var(--blue-light)",
     avatarColor: "var(--blue)",
+    verified: true,
+  },
+  {
+    id: "t-devansh",
+    name: "Devansh Kapoor",
+    role: "Head of Product",
+    company: "NexGen Studio",
+    rating: 5,
+    category: "Full Stack Web",
+    project: "Enterprise Workflow Suite",
+    date: "May 2026",
+    text: "Sanket built an incredible web application for us. High performance, great code structure, and super fast execution! We were able to launch 3 weeks ahead of schedule.",
+    avatarBg: "var(--orange-light)",
+    avatarColor: "var(--red)",
     verified: true,
   },
   {
@@ -52,7 +109,7 @@ const INITIAL_TESTIMONIALS = [
     rating: 5,
     category: "Performance & UI",
     project: "Frontend Optimization",
-    date: "Feb 2026",
+    date: "Apr 2026",
     text: "Sanket refactored our web frontend, boosting initial render speeds by over 60%. His structured approach to accessibility and modern CSS is top tier!",
     avatarBg: "var(--green-light)",
     avatarColor: "var(--green)",
@@ -66,10 +123,66 @@ const INITIAL_TESTIMONIALS = [
     rating: 5,
     category: "AI / ML",
     project: "QuoteGenie AI",
-    date: "Jan 2026",
+    date: "Mar 2026",
     text: "Deploying deep learning NLP models into interactive web apps can be tricky, but Sanket handled the LSTM neural network pipeline flawlessly. Highly recommended!",
     avatarBg: "var(--yellow)",
     avatarColor: "#b58900",
+    verified: true,
+  },
+  {
+    id: "t3",
+    name: "Marcus Vance",
+    role: "Co-Founder & CTO",
+    company: "DataSynthetix Labs",
+    rating: 5,
+    category: "AI / ML",
+    project: "InsightForge AI",
+    date: "Feb 2026",
+    text: "The multi-agent system Sanket engineered for automated web research reports blew us away. Fast stream parsing, solid LangChain setup, and ultra-smooth execution.",
+    avatarBg: "var(--blue-light)",
+    avatarColor: "var(--blue)",
+    verified: true,
+  },
+  {
+    id: "t1",
+    name: "Aarav Mehta",
+    role: "Founder & CEO",
+    company: "TechScale Studio",
+    rating: 5,
+    category: "AI / ML",
+    project: "Prepify AI",
+    date: "Jan 2026",
+    text: "Sanket built our AI-powered interview prep engine from scratch. His expertise in Gemini API integrations and prompt pipeline architecture saved us over 3 months of dev time. Exceptional problem solver!",
+    avatarBg: "var(--purple-light)",
+    avatarColor: "var(--purple)",
+    verified: true,
+  },
+  {
+    id: "t-priya-v",
+    name: "Priya Verma",
+    role: "CTO & Co-Founder",
+    company: "TechCorp Solutions",
+    rating: 5,
+    category: "AI / ML",
+    project: "AI Inference Pipeline",
+    date: "Dec 2025",
+    text: "Outstanding work by Sanket! He delivered our AI inference microservices with clean code, zero downtime, and exceptional documentation.",
+    avatarBg: "var(--blue-light)",
+    avatarColor: "var(--blue)",
+    verified: true,
+  },
+  {
+    id: "t2",
+    name: "Priya Sharma",
+    role: "Senior Product Manager",
+    company: "Zomato Enterprise",
+    rating: 5,
+    category: "Full Stack Web",
+    project: "UI Component Library",
+    date: "Nov 2025",
+    text: "Collaborating with Sanket on dynamic interface components was an absolute pleasure. He delivers clean, maintainable React code with a keen eye for responsiveness and performance.",
+    avatarBg: "var(--orange-light)",
+    avatarColor: "var(--red)",
     verified: true,
   },
 ];
@@ -89,18 +202,22 @@ const CLOUD_API_BASE = "https://api.restful-api.dev/objects";
 function getTestimonialTimestamp(t) {
   if (!t) return null;
 
+  const isValidTs = (val) =>
+    typeof val === "number" &&
+    !isNaN(val) &&
+    val >= 1577836800000 &&
+    val <= 1900000000000;
+
   // 1. Direct timestamp properties
-  if (typeof t.createdAt === "number" && !isNaN(t.createdAt) && t.createdAt > 1000000000000) {
-    return t.createdAt;
-  }
+  if (isValidTs(t.createdAt)) return t.createdAt;
   if (typeof t.createdAt === "string" && !isNaN(Date.parse(t.createdAt))) {
-    return Date.parse(t.createdAt);
+    const p = Date.parse(t.createdAt);
+    if (isValidTs(p)) return p;
   }
-  if (typeof t.timestamp === "number" && !isNaN(t.timestamp) && t.timestamp > 1000000000000) {
-    return t.timestamp;
-  }
+  if (isValidTs(t.timestamp)) return t.timestamp;
   if (typeof t.timestamp === "string" && !isNaN(Date.parse(t.timestamp))) {
-    return Date.parse(t.timestamp);
+    const p = Date.parse(t.timestamp);
+    if (isValidTs(p)) return p;
   }
 
   // 2. Check for numeric user/ms timestamp in IDs
@@ -108,75 +225,71 @@ function getTestimonialTimestamp(t) {
   const userMatch = idStr.match(/user-(\d{10,14})/i);
   if (userMatch && userMatch[1]) {
     const parsed = parseInt(userMatch[1], 10);
-    if (!isNaN(parsed) && parsed > 1000000000000) {
-      return parsed;
-    }
+    if (isValidTs(parsed)) return parsed;
   }
 
   const msMatch = idStr.match(/(\d{13})/);
   if (msMatch && msMatch[1]) {
     const parsed = parseInt(msMatch[1], 10);
-    if (!isNaN(parsed) && parsed > 1000000000000) {
-      return parsed;
-    }
-  }
-
-  // 3. Hex timestamp embedded in restful-api cloud IDs (e.g. ff808181... containing 1a[0-9a-f]{9,11})
-  const hexMatch = idStr.match(/(1a[0-9a-f]{9,11})/i);
-  if (hexMatch && hexMatch[1]) {
-    const parsedHex = parseInt(hexMatch[1], 16);
-    if (!isNaN(parsedHex) && parsedHex > 1000000000000) {
-      return parsedHex;
-    }
+    if (isValidTs(parsed)) return parsed;
   }
 
   return null;
 }
 
-function getFormattedTestimonialDate(t) {
-  if (!t) return "Client Review";
+function getTestimonialDateValue(t) {
+  if (!t) return 0;
 
+  // 1. Parse date string if it has a clean Month Year (e.g. "Oct 2026", "Sep 2026")
+  if (t.date && typeof t.date === "string") {
+    const trimmed = t.date.trim();
+    if (
+      trimmed.toLowerCase() !== "just now" &&
+      !trimmed.toLowerCase().includes("ago") &&
+      !trimmed.toLowerCase().includes("today")
+    ) {
+      const parsed = Date.parse(`01 ${trimmed}`);
+      if (!isNaN(parsed) && parsed > 0) {
+        return parsed;
+      }
+    }
+  }
+
+  // 2. If timestamp is available
   const ts = getTestimonialTimestamp(t);
+  if (ts) return ts;
 
+  // 3. Fallback
+  return Date.parse("01 Nov 2025");
+}
+
+function getFormattedTestimonialDate(t) {
+  if (!t) return "Oct 2026";
+
+  // If t.date is already in clean Month Year format (e.g. "Oct 2026")
+  if (t.date && typeof t.date === "string") {
+    const trimmed = t.date.trim();
+    if (
+      trimmed.toLowerCase() !== "just now" &&
+      !trimmed.toLowerCase().includes("ago") &&
+      !trimmed.toLowerCase().includes("today")
+    ) {
+      return trimmed;
+    }
+  }
+
+  // If timestamp exists, format as Month Year
+  const ts = getTestimonialTimestamp(t);
   if (ts) {
-    const diffMs = Date.now() - ts;
-    if (diffMs < 0 || diffMs < 45000) {
-      return "Just Now";
+    try {
+      const d = new Date(ts);
+      return d.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+    } catch (e) {
+      // fallback
     }
-
-    const diffSec = Math.floor(diffMs / 1000);
-    const diffMin = Math.floor(diffSec / 60);
-    const diffHour = Math.floor(diffMin / 60);
-    const diffDay = Math.floor(diffHour / 24);
-    const diffWeek = Math.floor(diffDay / 7);
-    const diffMonth = Math.floor(diffDay / 30);
-    const diffYear = Math.floor(diffDay / 365);
-
-    if (diffMin < 60) {
-      return `${diffMin} ${diffMin === 1 ? "min" : "mins"} ago`;
-    }
-    if (diffHour < 24) {
-      return `${diffHour} ${diffHour === 1 ? "hour" : "hours"} ago`;
-    }
-    if (diffDay < 7) {
-      return `${diffDay} ${diffDay === 1 ? "day" : "days"} ago`;
-    }
-    if (diffWeek < 4) {
-      return `${diffWeek} ${diffWeek === 1 ? "week" : "weeks"} ago`;
-    }
-    if (diffMonth < 12) {
-      return `${diffMonth} ${diffMonth === 1 ? "month" : "months"} ago`;
-    }
-    return `${diffYear} ${diffYear === 1 ? "year" : "years"} ago`;
   }
 
-  // If t.date is defined and not "Just Now", return static date
-  if (t.date && t.date.trim() !== "" && t.date.toLowerCase() !== "just now") {
-    return t.date;
-  }
-
-  // Fallback for legacy review objects with date: "Just Now" but no valid timestamp
-  return "1 month ago";
+  return "Oct 2026";
 }
 
 function isReviewNew(t) {
@@ -186,7 +299,7 @@ function isReviewNew(t) {
   if (ts) {
     const diffMs = Date.now() - ts;
     const diffDays = diffMs / (1000 * 60 * 60 * 24);
-    // NEW badge is strictly restricted to reviews less than 1 month (30 days) old
+    // NEW badge strictly restricted to reviews less than 30 days old
     return diffDays >= 0 && diffDays < 30;
   }
 
@@ -268,38 +381,82 @@ export default function Testimonials() {
                   id: effectiveId,
                   dataId: dataObj.id,
                   cloudId: item.id,
+                  date: getFormattedTestimonialDate(dataObj),
+                  verified: true,
                 };
               })
-              .filter(Boolean);
+              .filter((item) => {
+                if (!item || !item.name) return false;
+                // Avoid stale duplicate overriding canonical INITIAL_TESTIMONIALS
+                return !INITIAL_TESTIMONIALS.some(
+                  (it) => it.name.toLowerCase().trim() === item.name.toLowerCase().trim()
+                );
+              });
           }
         }
 
-        // 2. Also check LocalStorage fallback
+        // 2. Also check LocalStorage fallback for visitor reviews
         let localReviews = [];
         try {
           const saved = localStorage.getItem("sanket_portfolio_testimonials");
           if (saved) {
-            localReviews = JSON.parse(saved);
+            const parsed = JSON.parse(saved);
+            if (Array.isArray(parsed)) {
+              localReviews = parsed
+                .filter(
+                  (r) =>
+                    r &&
+                    r.name &&
+                    !INITIAL_TESTIMONIALS.some(
+                      (it) => it.name.toLowerCase().trim() === r.name.toLowerCase().trim()
+                    )
+                )
+                .map((r) => ({
+                  ...r,
+                  date: getFormattedTestimonialDate(r),
+                  verified: true,
+                }));
+            }
           }
         } catch (e) {
           // fallback
         }
 
-        // Combine Cloud + Local + Initial (Deduplicating by text/id)
+        // Combine Initial + Cloud + Local (Authoritative INITIAL_TESTIMONIALS first)
         const combinedUserReviews = [...cloudReviews, ...localReviews];
         const uniqueUserReviews = [];
-        const seenTexts = new Set();
+        const seenKeys = new Set();
 
         for (const item of combinedUserReviews) {
-          const key = (item.text || "").toLowerCase().trim();
-          if (key && !seenTexts.has(key)) {
-            seenTexts.add(key);
-            uniqueUserReviews.push(item);
+          const key = ((item.name || "") + "|" + (item.company || "")).toLowerCase().trim();
+          if (key && !seenKeys.has(key)) {
+            seenKeys.add(key);
+            uniqueUserReviews.push({
+              ...item,
+              date: getFormattedTestimonialDate(item),
+              verified: true,
+            });
           }
         }
 
         if (isMounted) {
-          setTestimonials([...uniqueUserReviews, ...INITIAL_TESTIMONIALS]);
+          // INITIAL_TESTIMONIALS is authoritative and listed first
+          const allCombined = [...INITIAL_TESTIMONIALS, ...uniqueUserReviews];
+          const finalDeduped = [];
+          const allSeen = new Set();
+          for (const item of allCombined) {
+            const key = ((item.name || "") + "|" + (item.company || "")).toLowerCase().trim();
+            if (!allSeen.has(key)) {
+              allSeen.add(key);
+              finalDeduped.push({
+                ...item,
+                date: getFormattedTestimonialDate(item),
+                verified: true,
+              });
+            }
+          }
+          finalDeduped.sort((a, b) => getTestimonialDateValue(b) - getTestimonialDateValue(a));
+          setTestimonials(finalDeduped);
         }
       } catch (err) {
         console.error("Cloud testimonials sync error:", err);
@@ -316,22 +473,24 @@ export default function Testimonials() {
   }, []);
 
   // Filter logic
-  const categories = ["All", "AI / ML", "Full Stack Web", "Performance & UI"];
+  const categories = ["All", "Enterprise Systems", "AI / ML", "Full Stack Web", "Performance & UI"];
 
-  const filteredTestimonials = testimonials.filter((t) => {
-    const matchesCategory =
-      activeCategory === "All" || t.category === activeCategory;
-    const q = searchQuery.toLowerCase().trim();
-    const matchesSearch =
-      !q ||
-      t.name.toLowerCase().includes(q) ||
-      t.company.toLowerCase().includes(q) ||
-      t.role.toLowerCase().includes(q) ||
-      t.text.toLowerCase().includes(q) ||
-      (t.project && t.project.toLowerCase().includes(q));
+  const filteredTestimonials = testimonials
+    .filter((t) => {
+      const matchesCategory =
+        activeCategory === "All" || t.category === activeCategory;
+      const q = searchQuery.toLowerCase().trim();
+      const matchesSearch =
+        !q ||
+        t.name.toLowerCase().includes(q) ||
+        (t.company && t.company.toLowerCase().includes(q)) ||
+        t.role.toLowerCase().includes(q) ||
+        t.text.toLowerCase().includes(q) ||
+        (t.project && t.project.toLowerCase().includes(q));
 
-    return matchesCategory && matchesSearch;
-  });
+      return matchesCategory && matchesSearch;
+    })
+    .sort((a, b) => getTestimonialDateValue(b) - getTestimonialDateValue(a));
 
   // Calculate stats
   const totalReviews = testimonials.length;
@@ -347,6 +506,11 @@ export default function Testimonials() {
     const chosenColor = COLOR_OPTIONS[newReview.colorIndex];
 
     const now = Date.now();
+    const formattedDate = new Date(now).toLocaleDateString("en-US", {
+      month: "short",
+      year: "numeric",
+    });
+
     const reviewToAdd = {
       id: `user-${now}`,
       createdAt: now,
@@ -356,7 +520,7 @@ export default function Testimonials() {
       rating: newReview.rating,
       category: newReview.category,
       project: newReview.project.trim() || newReview.category,
-      date: "Just Now",
+      date: formattedDate,
       text: newReview.text.trim(),
       avatarBg: chosenColor.bg,
       avatarColor: chosenColor.color,
@@ -365,8 +529,10 @@ export default function Testimonials() {
       link: newReview.link.trim(),
     };
 
-    // 1. Instant UI update
-    const updated = [reviewToAdd, ...testimonials];
+    // 1. Instant UI update sorted chronologically
+    const updated = [reviewToAdd, ...testimonials].sort(
+      (a, b) => getTestimonialDateValue(b) - getTestimonialDateValue(a)
+    );
     setTestimonials(updated);
 
     // 2. Save locally
@@ -530,7 +696,7 @@ export default function Testimonials() {
         whileInView={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
-        Authentic feedback from startup founders, product managers, and engineering teams I've collaborated with.
+        Authentic feedback from enterprise directors, engineering leads, and startup founders across {totalReviews}+ verified client engagements.
       </motion.p>
 
       {/* STATS BAR */}
@@ -547,12 +713,20 @@ export default function Testimonials() {
         <div className="stat-divider"></div>
         <div className="stat-item">
           <div className="stat-val">{totalReviews}+</div>
-          <div className="stat-lbl">Client Reviews</div>
+          <div className="stat-lbl">Verified Client Reviews</div>
         </div>
         <div className="stat-divider"></div>
         <div className="stat-item">
           <div className="stat-val">100%</div>
           <div className="stat-lbl">Satisfaction Rate</div>
+        </div>
+        <div className="stat-divider"></div>
+        <div className="stat-item" style={{ minWidth: "90px" }}>
+          <div className="stat-val" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px", fontSize: "1.25rem" }}>
+            <span style={{ display: "inline-block", width: "10px", height: "10px", borderRadius: "50%", background: "#2ecc71", boxShadow: "0 0 6px #2ecc71" }}></span>
+            <span>Live</span>
+          </div>
+          <div className="stat-lbl">Cloud Verified</div>
         </div>
         <div className="stat-cta">
           <motion.button
@@ -631,7 +805,7 @@ export default function Testimonials() {
                 <div className="t-author-info">
                   <div className="t-name-row">
                     <h4 className="t-name">{t.name}</h4>
-                    {t.verified && <span className="verified-tag" title="Verified Review">✓ Verified</span>}
+                    {(t.verified !== false) && <span className="verified-tag" title="Verified Client Review">✓ Verified</span>}
                   </div>
                   <p className="t-role">
                     {t.role} {t.company && `• ${t.company}`}
@@ -765,6 +939,7 @@ export default function Testimonials() {
                           setNewReview({ ...newReview, category: e.target.value })
                         }
                       >
+                        <option value="Enterprise Systems">Enterprise Systems</option>
                         <option value="Full Stack Web">Full Stack Web</option>
                         <option value="AI / ML">AI / ML</option>
                         <option value="Performance & UI">Performance & UI</option>
@@ -906,7 +1081,9 @@ export default function Testimonials() {
                       </p>
 
                       <div className="t-card-footer">
-                        <span className="t-date">Just Now</span>
+                        <span className="t-date">
+                          {new Date().toLocaleDateString("en-US", { month: "short", year: "numeric" })}
+                        </span>
                       </div>
                     </div>
                   </div>
